@@ -1,9 +1,6 @@
 #ifndef __FUZZY__
 #define __FUZZY__
 
-
-
-
 using real_t = double;
 
 class TriFuzzyNum {
