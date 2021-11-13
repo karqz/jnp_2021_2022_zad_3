@@ -1,3 +1,0 @@
-/home/agatka/Dokumenty/CLionProjects/JNP/jnp_2021_2022_zad_3/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/agatka/Dokumenty/CLionProjects/JNP/jnp_2021_2022_zad_3/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/agatka/Dokumenty/CLionProjects/JNP/jnp_2021_2022_zad_3/cmake-build-debug/CMakeFiles/jnp_2021_2022_zad_3.dir
