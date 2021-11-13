@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/jnp_2021_2022_zad_3.dir/fuzzy.cc.o -o jnp_2021_2022_zad_3 
