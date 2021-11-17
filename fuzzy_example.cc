@@ -23,8 +23,8 @@ int main() {
   assert(num1 != num2);
   assert(num2 < num1);
   assert(num2 <= num1);
-  // assert(num3 == crisp_number(1));
-  // static_assert(num3 == crisp_number(1));
+  assert(num3 == crisp_number(1));
+  static_assert(num3 == crisp_number(1));
 
   assert(num1 <=> num2 > 0);
   assert(num2 <=> num1 < 0);
@@ -32,11 +32,11 @@ int main() {
   assert((num1 += num3) == TriFuzzyNum(2, 3, 4));
   assert((num1 -= num3) == TriFuzzyNum(1, 2, 3));
   assert((num1 *= num3) == num1);
-  // assert((num1 += crisp_zero) == num1);
+  assert((num1 += crisp_zero) == num1);
 
-  // static_assert(num3.lower_value() == 1);
-  // static_assert(num3.modal_value() == 1);
-  // static_assert(num3.upper_value() == 1);
+  static_assert(num3.lower_value() == 1);
+  static_assert(num3.modal_value() == 1);
+  static_assert(num3.upper_value() == 1);
 
   // TriFuzzyNumSet fn_set1({TriFuzzyNum(1, 2, 4), TriFuzzyNum(1, 3, 6)});
   // assert(fn_set1.arithmetic_mean() == TriFuzzyNum(1, 2.5, 5));

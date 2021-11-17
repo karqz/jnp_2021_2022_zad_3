@@ -1,38 +1,21 @@
-<<<<<<< HEAD
-#ifndef FUZZY_H
-#define FUZZY_H
-
-#include <vector>
-#include <iostream>
-#include <tuple>
-=======
 #ifndef __FUZZY__
 #define __FUZZY__
->>>>>>> 52658674e21442069065c2d3ed4cc9997eb7864b
+
+#include<iostream>
+#include<vector>
+#include<tuple>
+#include<math.h>
 
 using real_t = double;
 using fuzzy_rank_t = std::tuple<real_t, real_t, real_t>;
+using std::move;
 using std::strong_ordering;
 
-constinit crisp_zero = TriFuzzyNum(0,0,0);
-
-consteval TriFuzzyNum crisp_number(real_t v) {
-    return TriFuzzyNum(v, v, v);
-}
 
 class TriFuzzyNum {
     real_t l;
     real_t m;
     real_t u;
-<<<<<<< HEAD
-
-    friend std::ostream& operator<<(std::ostream& os, const TriFuzzyNum& num) {
-        os << "(" << num.l
-           << ", " << num.m
-           << ", " << num.u << ")";
-
-        return os;
-    }
 public:
 
     constexpr TriFuzzyNum(const real_t &a, const real_t &b, const real_t &c) {
@@ -45,31 +28,26 @@ public:
     }
 
     //konstruktor kopiujacy
-    TriFuzzyNum(TriFuzzyNum& that) {
-        l = that.l;
-        m = that.m;
-        u = that.u;
-    }
+    TriFuzzyNum(const TriFuzzyNum& that):l(that.l),m(that.m),u(that.u) {}
     //konstruktor przenoszacy
-    TriFuzzyNum(TriFuzzyNum&& that) {
-        l = move(that.l);
-        m = move(that.m);
-        u = move(that.u);
-    }
+    TriFuzzyNum(TriFuzzyNum&& that):l(move(that.l)),m(move(that.m)),u(move(that.u)) {}
 
-    constexpr real_t lower_value() { return l; }
+    constexpr real_t lower_value() const { return l; }
 
-    constexpr real_t modal_value() { return m; }
+    constexpr real_t modal_value() const { return m; }
 
-    constexpr real_t upper_value() { return u; }
+    constexpr real_t upper_value() const { return u; }
 
     //operator kopiujacy
     TriFuzzyNum& operator=(const TriFuzzyNum& that) {
-        l = that.l;
-        m = that.m;
-        u = that.u;
+        if (this != &that) {
+            l = that.l;
+            m = that.m;
+            u = that.u;
+        }
         return *this;
     }
+
     //operator przenoszacy
     TriFuzzyNum& operator=(TriFuzzyNum&& that) {
         l = move(that.l);
@@ -78,23 +56,43 @@ public:
         return *this;
     }
 
-    TriFuzzyNum& operator+=(const TriFuzzyNum& that);
-    TriFuzzyNum& operator-=(const TriFuzzyNum& that);
-    TriFuzzyNum& operator*=(const TriFuzzyNum& that);
-
-    const TriFuzzyNum operator+(const TriFuzzyNum &that) const {
-        real_t l2 = that.l, m2 = that.m, u2 = that.u;
-        return TriFuzzyNum(l + l2, m + m2, u + u2);
+    TriFuzzyNum& operator+=(const TriFuzzyNum& that) {
+        l += that.l;
+        m += that.m;
+        u += that.u;
+        return *this;
     }
 
-    const TriFuzzyNum operator-(const TriFuzzyNum &that) const {
-        real_t l2 = that.l, m2 = that.m, u2 = that.u;
-        return TriFuzzyNum(l - u2, m - m2, u - l2);
+    TriFuzzyNum& operator-=(const TriFuzzyNum& that) {
+        l -= that.u;
+        m -= that.m;
+        u -= that.l;
+        return *this;
     }
 
-    const TriFuzzyNum operator*(const TriFuzzyNum &that) const {
-        real_t l2 = that.l, m2 = that.m, u2 = that.u;
-        return TriFuzzyNum(l * l2, m * m2, u * u2);
+    TriFuzzyNum& operator*=(const TriFuzzyNum& that) {
+        l *= that.l;
+        m *= that.m;
+        u *= that.u;
+        return *this;
+    }
+
+    const TriFuzzyNum operator+(const TriFuzzyNum& that) const {
+        TriFuzzyNum result = *this;
+        result += that;
+        return result;
+    }
+
+    const TriFuzzyNum operator-(const TriFuzzyNum& that) const {
+        TriFuzzyNum result = *this;
+        result -= that;
+        return result;
+    }
+
+    const TriFuzzyNum operator*(const TriFuzzyNum& that) const {
+        TriFuzzyNum result = *this;
+        result *= that;
+        return result;
     }
 
     fuzzy_rank_t getRank() const {
@@ -103,6 +101,14 @@ public:
         real_t y = (u - l) / z;
 
         return std::make_tuple(x - y / 2, 1 - y, m);
+    }
+
+    constexpr bool operator==(const TriFuzzyNum& that) const {
+        return l == that.l && m == that.m && u == that.u;
+    }
+
+    constexpr bool operator!=(const TriFuzzyNum& that) const {
+        return !(*this == that);
     }
 
     auto operator<=>(const int& a) const;
@@ -125,35 +131,20 @@ public:
             }
         }
     }
-};
-=======
-    public:
-        
 
-        constexpr TriFuzzyNum(const real_t &a, const real_t &b, const real_t &c) {
-            l = a;
-            m = b;
-            u = c;
-        };
+    friend std::ostream& operator<<(std::ostream& os, const TriFuzzyNum& num) {
+        os << "(" << num.l
+           << ", " << num.m
+           << ", " << num.u << ")";
 
-
-        TriFuzzyNum& operator=(const TriFuzzyNum& that);
-
-        TriFuzzyNum& operator+=(const TriFuzzyNum& that);
-        TriFuzzyNum& operator-=(const TriFuzzyNum& that);
-        TriFuzzyNum& operator*=(const TriFuzzyNum& that);
-
-        const TriFuzzyNum operator+(const TriFuzzyNum &that) const;
-        const TriFuzzyNum operator-(const TriFuzzyNum &that) const;
-        const TriFuzzyNum operator*(const TriFuzzyNum &that) const;
-
-        
-        auto operator<=>(const int& a) const; 
-        auto operator<=>(const TriFuzzyNum& a) const = default;
-
-    friend std::ostream& operator<<(std::ostream&, const TriFuzzyNum&);
+        return os;
+    }
 };
 
->>>>>>> 52658674e21442069065c2d3ed4cc9997eb7864b
+constinit auto crisp_zero = TriFuzzyNum(0,0,0);
+
+consteval TriFuzzyNum crisp_number(real_t v) {
+    return TriFuzzyNum(v, v, v);
+}
 
 #endif //__FUZZY__
