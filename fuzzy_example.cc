@@ -38,21 +38,21 @@ int main() {
   static_assert(num3.modal_value() == 1);
   static_assert(num3.upper_value() == 1);
 
-  // TriFuzzyNumSet fn_set1({TriFuzzyNum(1, 2, 4), TriFuzzyNum(1, 3, 6)});
-  // assert(fn_set1.arithmetic_mean() == TriFuzzyNum(1, 2.5, 5));
+  TriFuzzyNumSet fn_set1({TriFuzzyNum(1, 2, 4), TriFuzzyNum(1, 3, 6)});
+  assert(fn_set1.arithmetic_mean() == TriFuzzyNum(1, 2.5, 5));
 
-  // fn_set1.insert(TriFuzzyNum(1, 4, 5));
-  // assert(fn_set1.arithmetic_mean() == TriFuzzyNum(1, 3, 5));
+  fn_set1.insert(TriFuzzyNum(1, 4, 5));
+  assert(fn_set1.arithmetic_mean() == TriFuzzyNum(1, 3, 5));
 
-  // fn_set1.remove(TriFuzzyNum(1, 3, 6));
-  // assert(fn_set1.arithmetic_mean() == TriFuzzyNum(1, 3, 4.5));
+  fn_set1.remove(TriFuzzyNum(1, 3, 6));
+  assert(fn_set1.arithmetic_mean() == TriFuzzyNum(1, 3, 4.5));
 
-  // TriFuzzyNumSet fn_set2({TriFuzzyNum(1, 2, 3),
-  //                         TriFuzzyNum(1, 2, 3),
-  //                         TriFuzzyNum(1, 5, 6)});
-  // assert(fn_set2.arithmetic_mean() == TriFuzzyNum(1, 3, 4));
+  TriFuzzyNumSet fn_set2({TriFuzzyNum(1, 2, 3),
+                           TriFuzzyNum(1, 2, 3),
+                           TriFuzzyNum(1, 5, 6)});
+  assert(fn_set2.arithmetic_mean() == TriFuzzyNum(1, 3, 4));
 
-  // constinit static TriFuzzyNum num4(1.25, 2.25, 3.25);
-  // num4 += crisp_number(0.25);
-  // assert(num4 == TriFuzzyNum(1.5, 2.5, 3.5));
+  constinit static TriFuzzyNum num4(1.25, 2.25, 3.25);
+  num4 += crisp_number(0.25);
+  assert(num4 == TriFuzzyNum(1.5, 2.5, 3.5));
 }
