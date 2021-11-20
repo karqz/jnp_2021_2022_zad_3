@@ -156,7 +156,7 @@ class TriFuzzyNumSet {
             set.erase(number);
         }
 
-        TriFuzzyNum arithmetic_mean() {
+        TriFuzzyNum arithmetic_mean() const {
             if (set.empty()) {
                 throw std::length_error("TriFuzzyNumSet::arithmetic_mean - the set is empty.");
             }
