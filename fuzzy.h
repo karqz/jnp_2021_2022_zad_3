@@ -5,7 +5,7 @@
 #include<set>
 #include<tuple>
 #include<cmath>
-#include <algorithm>
+#include<algorithm>
 
 using real_t = double;
 using fuzzy_rank_t = std::tuple<real_t, real_t, real_t>;
@@ -32,24 +32,8 @@ class TriFuzzyNum {
 
         [[nodiscard]] constexpr real_t upper_value() const { return u; }
 
-        constexpr void sortAndUpdateFuzzyValues() {
-            std::array<real_t, 3> nums = {l, m, u};
-            std::ranges::sort(nums);
-
-            l = nums[0];
-            m = nums[1];
-            u = nums[2];
-        }
-
-        TriFuzzyNum& operator=(const TriFuzzyNum& that) {
-            if (this != &that) {
-                l = that.l;
-                m = that.m;
-                u = that.u;
-            }
-            return *this;
-        }
-
+        TriFuzzyNum& operator=(const TriFuzzyNum& that) = default;
+        
         constexpr TriFuzzyNum& operator=(TriFuzzyNum&& that) = default;
 
         constexpr TriFuzzyNum& operator+=(const TriFuzzyNum& that) {
@@ -92,14 +76,6 @@ class TriFuzzyNum {
             return result;
         }
 
-        [[nodiscard]] constexpr fuzzy_rank_t getRank() const {
-            real_t z = (u - l) + sqrt(1 + (u - m) * (u - m)) + sqrt(1 + (m - l) * (m - l));
-            real_t x = ((u - l) * m + sqrt(1 + (u - m) * (u - m)) * l + sqrt(1 + (m - l) * (m - l)) * u) / z;
-            real_t y = (u - l) / z;
-
-            return make_tuple(x - y / 2, 1 - y, m);
-        }
-
         constexpr bool operator==(const TriFuzzyNum& that) const {
             return l == that.l && m == that.m && u == that.u;
         }
@@ -108,7 +84,6 @@ class TriFuzzyNum {
             return !(*this == that);
         }
 
-        //auto operator<=>(const int& a) const;
         constexpr auto operator<=>(const TriFuzzyNum& that) const {
             fuzzy_rank_t rank1 = getRank();
             fuzzy_rank_t rank2 = that.getRank();
@@ -126,6 +101,23 @@ class TriFuzzyNum {
 
     private:
         real_t l, m, u;
+
+        [[nodiscard]] constexpr fuzzy_rank_t getRank() const {
+            real_t z = (u - l) + sqrt(1 + (u - m) * (u - m)) + sqrt(1 + (m - l) * (m - l));
+            real_t x = ((u - l) * m + sqrt(1 + (u - m) * (u - m)) * l + sqrt(1 + (m - l) * (m - l)) * u) / z;
+            real_t y = (u - l) / z;
+
+            return make_tuple(x - y / 2, 1 - y, m);
+        }
+
+        constexpr void sortAndUpdateFuzzyValues() {
+            std::array<real_t, 3> nums = {l, m, u};
+            std::ranges::sort(nums);
+
+            l = nums[0];
+            m = nums[1];
+            u = nums[2];
+        }
 };
 
 consteval TriFuzzyNum crisp_number(real_t v) {
@@ -142,19 +134,11 @@ class TriFuzzyNumSet {
 
         TriFuzzyNumSet(const TriFuzzyNumSet& that) = default;
 
-        TriFuzzyNumSet(TriFuzzyNumSet&& that):set(move(that.set)) {}
+        TriFuzzyNumSet(TriFuzzyNumSet&& that) = default;
 
-        TriFuzzyNumSet& operator=(const TriFuzzyNumSet& that) {
-            if (this != &that) {
-                set = that.set;
-            }
-            return *this;
-        }
+        TriFuzzyNumSet& operator=(const TriFuzzyNumSet& that) = default;
 
-        TriFuzzyNumSet& operator=(TriFuzzyNumSet&& that) {
-            set = move(that.set);
-            return *this;
-        }
+        TriFuzzyNumSet& operator=(TriFuzzyNumSet&& that) = default;
 
         ~TriFuzzyNumSet() = default;
 
