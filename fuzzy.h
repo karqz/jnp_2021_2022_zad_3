@@ -26,6 +26,8 @@ class TriFuzzyNum {
 
         TriFuzzyNum(TriFuzzyNum&& that) = default;
 
+        ~TriFuzzyNum() = default;
+
         [[nodiscard]] constexpr real_t lower_value() const { return l; }
 
         [[nodiscard]] constexpr real_t modal_value() const { return m; }
@@ -33,7 +35,7 @@ class TriFuzzyNum {
         [[nodiscard]] constexpr real_t upper_value() const { return u; }
 
         TriFuzzyNum& operator=(const TriFuzzyNum& that) = default;
-        
+
         constexpr TriFuzzyNum& operator=(TriFuzzyNum&& that) = default;
 
         constexpr TriFuzzyNum& operator+=(const TriFuzzyNum& that) {
