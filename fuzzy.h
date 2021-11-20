@@ -22,9 +22,9 @@ class TriFuzzyNum {
             sortAndUpdateFuzzyValues();
         }
 
-        TriFuzzyNum(const TriFuzzyNum& that) = default;
+        constexpr TriFuzzyNum(const TriFuzzyNum& that) = default;
 
-        TriFuzzyNum(TriFuzzyNum&& that) = default;
+        constexpr TriFuzzyNum(TriFuzzyNum&& that) = default;
 
         ~TriFuzzyNum() = default;
 
